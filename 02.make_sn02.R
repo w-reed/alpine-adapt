@@ -7,6 +7,8 @@
 
 sn.01 = read.csv("data/sn01.csv")
 
+
+
 sn.01$TIMESTAMP = sn.01$date
 sn.01$date = format(as.POSIXct(sn.01$date,format='%Y-%m-%d %H:%M:%S'),format='%Y-%m-%d')
 
@@ -66,9 +68,19 @@ sn = merge(sn_means, sn_minimums)
 sn = merge(sn, sn_maximums)
 sn = merge(sn, sn_sds)
 
+#Here we exclude two sensors from the data, 1 and 21. 1 is excluded because
+#it was swapped with another sensor, 18, which is also not included. 21 is excluded
+#because it was not correctly aligned with the plot it was monitoring.
+
 sn = sn[sn$year != 2017, ]
 sn = sn[sn$node != 1, ]
 sn = sn[sn$node != 21, ]
 
+#write.csv(sn, 'data/sn_w_21.csv', row.names = F)
+
 write.csv(sn, "data/sn02.csv", row.names = F)
 rm(list = ls())
+
+
+
+

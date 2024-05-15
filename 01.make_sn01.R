@@ -9,8 +9,7 @@
 
 
 ## Get list of files in the data subfolder
-files1 = list.files("data/knb-lter-nwt.210.4/")
-
+files1 = list.files("data/knb-lter-nwt.210.4.2/")
 ## Read in one file to get the columns names / Uncomment if need to modify
 # xx = read.csv("data/knb-lter-nwt.210.3/sn_01_tenminute.jm.data.csv")
 # dput(colnames(xx))
@@ -18,7 +17,7 @@ files1 = list.files("data/knb-lter-nwt.210.4/")
 ## read all csvs (from first locale)
 for (i in 1:length(files1)){
   ## Loop through files to read in
-  file1 = read.csv(paste0("data/knb-lter-nwt.210.4/", files1[i]))
+  file1 = read.csv(paste0("data/knb-lter-nwt.210.4.2/", files1[i]))
   ## Adjust column names because they are messed up.
   file1 = file1[, c("LTER_site", "local_site", "sensornode", "date", "airtemp_max", 
                     "flag_airtemp_max", "airtemp_min", "flag_airtemp_min", "airtemp_avg", 
@@ -84,4 +83,5 @@ include = c("LTER_site", "local_site", "sensornode", "date","airtemp_avg","soilt
 sn.2 = sn.2[, include]
 
 write.csv(sn.2, "data/sn01.csv", row.names = FALSE)
+
 rm(list = ls())

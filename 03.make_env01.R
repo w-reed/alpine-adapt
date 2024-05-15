@@ -2,6 +2,7 @@
 library(imputeTS)
 sn02 = read.csv("data/sn02.csv")
 
+#sn02 = read.csv('data/sn_w_21.csv')
 
 threshold.crossing = function(vector, theta){
   vector = vector[!is.na(vector)]
@@ -29,6 +30,7 @@ sn.mc = sn.mc[sn.mc$month %in% c(5,6,7,8,9,10), ]
 
 years = unique(sn.mc$year)
 plots = unique(sn.mc$node)
+
 plots = c(10, 11, 12, 13, 14, 16, 17, 19, 20, 6, 7, 8, 9)
 
 df = as.data.frame(matrix(nrow = 0, ncol = 5))
@@ -273,10 +275,17 @@ xx = merge(xx, df3, by.x = c("plot", "year"), by.y = c("node", "year"))
 xx = merge(xx, df4, by.x = c("plot", "year"), by.y = c("node", "year"))
 xx = merge(xx, acf_holder)
 
-names(xx) = c("node", "year", "MEAN_SM_30", "MEAN_SM_5", "MEAN_ST_30", "MEAN_ST_5", "VAR_SM_30_tc", "VAR_SM_5_tc", "VAR_ST_30_tc", "VAR_ST_5_tc", "VAR_SM_30_cv", "VAR_SM_5_cv", "VAR_ST_30_cv", "VAR_ST_5_cv", "PRED_ST_5", "PRED_ST_30", "PRED_SM_5", "PRED_SM_30")
+
+names(xx) = c("node", "year", "MEAN_SM_30", "MEAN_SM_5", 
+              "MEAN_ST_30", "MEAN_ST_5", "VAR_SM_30_tc", "VAR_SM_5_tc",
+              "VAR_SM_5_TC_BC", "VAR_ST_30_tc", "VAR_ST_5_tc", "VAR_SM_30_cv", 
+              "VAR_SM_5_cv","VAR_SM_5_cv_bc","VAR_ST_30_cv", "VAR_ST_5_cv", "PRED_ST_5", 
+              "PRED_ST_30", "PRED_SM_5", "PRED_SM_30")
+names(xx)
 xx2 = aggregate(xx[,3:18], by = list(xx$node), FUN = mean, na.rm = T)
 
 write.csv(xx, "data/env03.csv", row.names = FALSE)
 write.csv(xx2, "data/env04.csv", row.names = FALSE)
+
 
 rm(list = ls())
